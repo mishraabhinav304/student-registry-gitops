@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-registry
+  namespace: student-registry
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: student-registry
+  template:
+    metadata:
+      labels:
+        app: student-registry
+    spec:
+      containers:
+        - name: student-registry
+          image: abhinav304/student-registry:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_PATH
+              value: /data/students.db
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+        - name: data
+          emptyDir: {}

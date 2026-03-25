@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: student-registry-gateway
+  namespace: student-registry
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: student-registry-vs
+  namespace: student-registry
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - student-registry-gateway
+  http:
+    - route:
+        - destination:
+            host: student-registry-svc
+            port:
+              number: 80
