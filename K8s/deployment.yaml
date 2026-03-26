@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: student-registry
-          image: abhinav304/student-registry:latest
+          image: abhinav304/student-registry:YU9d4DRVRNuXc2UA_9Udrg
           ports:
             - containerPort: 8000
           env:
