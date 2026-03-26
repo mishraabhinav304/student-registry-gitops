@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: student-registry
   namespace: student-registry
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
 spec:
   replicas: 3
   selector:
@@ -15,7 +18,7 @@ spec:
     spec:
       containers:
         - name: student-registry
-          image: abhinav304/student-registry:YU9d4DRVRNuXc2UA_9Udrg
+          image: abhinav304/student-registry:LX1pWENeQvGiundwp33GKw
           ports:
             - containerPort: 8000
           env:
